@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import promptsData from '@/assets/prompts.json';
 
 interface StyleSelectorProps {
@@ -21,17 +21,30 @@ const StyleSelector: React.FC<StyleSelectorProps> = ({ onSelect, selectedStyle }
 
     const groupNames = Object.keys(groupedStyles);
     const [activeGroup, setActiveGroup] = useState(groupNames[0]);
+    const groupRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
+
+    const handleGroupClick = (groupName: string) => {
+        setActiveGroup(groupName);
+        // Auto-scroll to center
+        setTimeout(() => {
+            const buttonElement = groupRefs.current[groupName];
+            if (buttonElement) {
+                buttonElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }, 0);
+    };
 
     const currentGroupItems = groupedStyles[activeGroup] || [];
 
     return (
-        <div className="mb-4">
+        <div className="mb-3">
             <h3 className="text-sm font-semibold mb-2 text-gray-700">Style</h3>
-            <div className="flex overflow-x-auto pb-2 mb-2 gap-2 scrollbar-thin scrollbar-thumb-gray-300">
+            <div className="flex overflow-x-auto pb-2 mb-2 gap-2">
                 {groupNames.map((group) => (
                     <button
                         key={group}
-                        onClick={() => setActiveGroup(group)}
+                        ref={(el) => (groupRefs.current[group] = el)}
+                        onClick={() => handleGroupClick(group)}
                         className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeGroup === group
                                 ? 'bg-purple-600 text-white'
                                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -45,7 +58,7 @@ const StyleSelector: React.FC<StyleSelectorProps> = ({ onSelect, selectedStyle }
                 {currentGroupItems.map((item) => (
                     <button
                         key={item.style}
-                        onClick={() => onSelect(item.style)} // Using style name as identifier
+                        onClick={() => onSelect(item.style)}
                         className={`px-2 py-2 text-xs rounded-md text-left border transition-all truncate ${selectedStyle === item.style
                                 ? 'border-purple-500 bg-purple-50 text-purple-700 shadow-sm'
                                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'

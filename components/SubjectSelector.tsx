@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import subjectsData from '@/assets/subjects.json';
 
 interface SubjectSelectorProps {
@@ -8,17 +8,30 @@ interface SubjectSelectorProps {
 
 const SubjectSelector: React.FC<SubjectSelectorProps> = ({ onSelect, selectedSubject }) => {
     const [activeGroup, setActiveGroup] = useState(subjectsData[0].group);
+    const groupRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
+
+    const handleGroupClick = (groupName: string) => {
+        setActiveGroup(groupName);
+        // Auto-scroll to center
+        setTimeout(() => {
+            const buttonElement = groupRefs.current[groupName];
+            if (buttonElement) {
+                buttonElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }, 0);
+    };
 
     const currentGroupItems = subjectsData.find(g => g.group === activeGroup)?.items || [];
 
     return (
-        <div className="mb-4">
+        <div className="mb-3">
             <h3 className="text-sm font-semibold mb-2 text-gray-700">Subject</h3>
-            <div className="flex overflow-x-auto pb-2 mb-2 gap-2 scrollbar-thin scrollbar-thumb-gray-300">
+            <div className="flex overflow-x-auto pb-2 mb-2 gap-2">
                 {subjectsData.map((group) => (
                     <button
                         key={group.group}
-                        onClick={() => setActiveGroup(group.group)}
+                        ref={(el) => (groupRefs.current[group.group] = el)}
+                        onClick={() => handleGroupClick(group.group)}
                         className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeGroup === group.group
                                 ? 'bg-blue-600 text-white'
                                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'

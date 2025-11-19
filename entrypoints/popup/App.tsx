@@ -4,6 +4,7 @@ import StyleSelector from '@/components/StyleSelector';
 import ManualInput from '@/components/ManualInput';
 import RandomButton from '@/components/RandomButton';
 import ActionButtons from '@/components/ActionButtons';
+import PromptDisplay from '@/components/PromptDisplay';
 import subjectsData from '@/assets/subjects.json';
 import promptsData from '@/assets/prompts.json';
 import './style.css';
@@ -13,6 +14,7 @@ function App() {
   const [styleName, setStyleName] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [copyLabel, setCopyLabel] = useState('Copy');
+  const [editablePrompt, setEditablePrompt] = useState('');
 
   const handleRandom = () => {
     setIsAnimating(true);
@@ -50,8 +52,13 @@ function App() {
     return parts.join(', ');
   };
 
+  // Update editable prompt when subject or style changes
+  useEffect(() => {
+    setEditablePrompt(getFullPrompt());
+  }, [subject, styleName]);
+
   const handleCopy = async () => {
-    const prompt = getFullPrompt();
+    const prompt = editablePrompt;
     if (!prompt) return;
 
     try {
@@ -64,7 +71,7 @@ function App() {
   };
 
   const handleFill = async () => {
-    const prompt = getFullPrompt();
+    const prompt = editablePrompt;
     if (!prompt) return;
 
     try {
@@ -87,36 +94,37 @@ function App() {
         AI Draw Helper
       </h1>
 
-      <div className="space-y-4">
-        <SubjectSelector
-          selectedSubject={subject}
-          onSelect={setSubject}
+      <div className="space-y-3">
+        <RandomButton
+          onRandom={handleRandom}
+          isAnimating={isAnimating}
         />
 
-        <ManualInput
-          value={subject}
-          onChange={setSubject}
+        <PromptDisplay
+          value={editablePrompt}
+          onChange={setEditablePrompt}
         />
 
-        <StyleSelector
-          selectedStyle={styleName}
-          onSelect={setStyleName}
+        <ActionButtons
+          onCopy={handleCopy}
+          onFill={handleFill}
+          copyLabel={copyLabel}
         />
 
-        <div className="border-t border-gray-200 my-4 pt-4">
-          <RandomButton
-            onRandom={handleRandom}
-            isAnimating={isAnimating}
+        <div className="border-t border-gray-200 my-3 pt-3">
+          <SubjectSelector
+            selectedSubject={subject}
+            onSelect={setSubject}
           />
 
-          <div className="bg-gray-50 p-3 rounded-md text-xs text-gray-500 min-h-[60px] max-h-[100px] overflow-y-auto mb-2">
-            {getFullPrompt() || 'Select subject and style to generate prompt...'}
-          </div>
+          <ManualInput
+            value={subject}
+            onChange={setSubject}
+          />
 
-          <ActionButtons
-            onCopy={handleCopy}
-            onFill={handleFill}
-            copyLabel={copyLabel}
+          <StyleSelector
+            selectedStyle={styleName}
+            onSelect={setStyleName}
           />
         </div>
       </div>
