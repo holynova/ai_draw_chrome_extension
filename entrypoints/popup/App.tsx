@@ -90,7 +90,7 @@ function App() {
 
   return (
     <div className="p-4 bg-white min-h-screen font-sans">
-      <h1 className="text-xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+      <h1 className="text-xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-sky-500">
         AI Draw Helper
       </h1>
 

@@ -30,25 +30,25 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({ onSelect, selectedSub
                 {subjectsData.map((group) => (
                     <button
                         key={group.group}
-                        ref={(el) => (groupRefs.current[group.group] = el)}
+                        ref={(el) => { groupRefs.current[group.group] = el; }}
                         onClick={() => handleGroupClick(group.group)}
                         className={`px-3 py-1 text-xs rounded-full whitespace-nowrap transition-colors ${activeGroup === group.group
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                ? 'bg-emerald-500 text-white'
+                                : 'bg-sky-100 text-gray-700 hover:bg-sky-200'
                             }`}
                     >
                         {group.group}
                     </button>
                 ))}
             </div>
-            <div className="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto p-1">
+            <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto p-1">
                 {currentGroupItems.map((item) => (
                     <button
                         key={item}
                         onClick={() => onSelect(item)}
                         className={`px-2 py-2 text-xs rounded-md text-center border transition-all ${selectedSubject === item
-                                ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
-                                : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                                ? 'border-emerald-400 bg-emerald-50 text-emerald-700 shadow-sm'
+                                : 'border-sky-200 hover:border-sky-300 hover:bg-sky-50'
                             }`}
                     >
                         {item}
