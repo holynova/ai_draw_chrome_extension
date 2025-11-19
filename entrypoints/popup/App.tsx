@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import SubjectSelector from '@/components/SubjectSelector';
 import StyleSelector from '@/components/StyleSelector';
 import ManualInput from '@/components/ManualInput';
 import RandomButton from '@/components/RandomButton';
 import ActionButtons from '@/components/ActionButtons';
 import PromptDisplay from '@/components/PromptDisplay';
+import RandomAnimation from '@/components/RandomAnimation';
 import subjectsData from '@/assets/subjects.json';
 import promptsData from '@/assets/prompts.json';
 import './style.css';
@@ -15,30 +16,35 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [copyLabel, setCopyLabel] = useState('Copy');
   const [editablePrompt, setEditablePrompt] = useState('');
+  const [finalSubjectIndex, setFinalSubjectIndex] = useState(0);
+  const [finalStyleIndex, setFinalStyleIndex] = useState(0);
+
+  // Flatten all subjects into a single array
+  const allSubjects = useMemo(() => {
+    return subjectsData.flatMap(group => group.items);
+  }, []);
+
+  // Get all style names
+  const allStyles = useMemo(() => {
+    return promptsData.map(item => item.style);
+  }, []);
 
   const handleRandom = () => {
     setIsAnimating(true);
 
-    // Simple animation simulation
-    let count = 0;
-    const maxCount = 10;
-    const interval = setInterval(() => {
-      // Pick random subject
-      const randomGroup = subjectsData[Math.floor(Math.random() * subjectsData.length)];
-      const randomSubject = randomGroup.items[Math.floor(Math.random() * randomGroup.items.length)];
+    // Pick random indices
+    const randomSubjectIndex = Math.floor(Math.random() * allSubjects.length);
+    const randomStyleIndex = Math.floor(Math.random() * allStyles.length);
 
-      // Pick random style
-      const randomStyleObj = promptsData[Math.floor(Math.random() * promptsData.length)];
+    setFinalSubjectIndex(randomSubjectIndex);
+    setFinalStyleIndex(randomStyleIndex);
 
-      setSubject(randomSubject);
-      setStyleName(randomStyleObj.style);
-
-      count++;
-      if (count >= maxCount) {
-        clearInterval(interval);
-        setIsAnimating(false);
-      }
-    }, 100);
+    // Set final values after animation completes (3 seconds)
+    setTimeout(() => {
+      setSubject(allSubjects[randomSubjectIndex]);
+      setStyleName(allStyles[randomStyleIndex]);
+      setIsAnimating(false);
+    }, 3000);
   };
 
   const getFullPrompt = () => {
@@ -84,7 +90,6 @@ function App() {
       }
     } catch (err) {
       console.error('Failed to send message:', err);
-      // Could show an error toast here if needed
     }
   };
 
@@ -99,6 +104,21 @@ function App() {
           onRandom={handleRandom}
           isAnimating={isAnimating}
         />
+
+        <div className="space-y-2">
+          <RandomAnimation
+            items={allSubjects}
+            isAnimating={isAnimating}
+            finalIndex={finalSubjectIndex}
+            label="Subject"
+          />
+          <RandomAnimation
+            items={allStyles}
+            isAnimating={isAnimating}
+            finalIndex={finalStyleIndex}
+            label="Style"
+          />
+        </div>
 
         <PromptDisplay
           value={editablePrompt}
