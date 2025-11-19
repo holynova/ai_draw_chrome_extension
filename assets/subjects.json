@@ -1,0 +1,104 @@
+[
+    {
+        "group": "People",
+        "items": [
+            "Portrait",
+            "Full Body",
+            "Silhouette",
+            "Cyberpunk Character",
+            "Warrior",
+            "Wizard",
+            "Astronaut",
+            "Dancer",
+            "Old Man",
+            "Young Girl",
+            "Samurai",
+            "Robot"
+        ]
+    },
+    {
+        "group": "Animals",
+        "items": [
+            "Cat",
+            "Dog",
+            "Dragon",
+            "Lion",
+            "Eagle",
+            "Wolf",
+            "Panda",
+            "Tiger",
+            "Butterfly",
+            "Owl",
+            "Fox",
+            "Bear"
+        ]
+    },
+    {
+        "group": "Environment",
+        "items": [
+            "Forest",
+            "Cityscape",
+            "Mountain",
+            "Ocean",
+            "Desert",
+            "Space",
+            "Underwater",
+            "Cyberpunk City",
+            "Ruins",
+            "Garden",
+            "Snowy Landscape",
+            "Volcano"
+        ]
+    },
+    {
+        "group": "Fruits & Food",
+        "items": [
+            "Apple",
+            "Banana",
+            "Strawberry",
+            "Burger",
+            "Pizza",
+            "Sushi",
+            "Cake",
+            "Coffee",
+            "Ice Cream",
+            "Grapes",
+            "Orange",
+            "Bread"
+        ]
+    },
+    {
+        "group": "Objects",
+        "items": [
+            "Car",
+            "Sword",
+            "Computer",
+            "Book",
+            "Guitar",
+            "Camera",
+            "Watch",
+            "Shoes",
+            "Chair",
+            "Lamp",
+            "Bicycle",
+            "Spaceship"
+        ]
+    },
+    {
+        "group": "Architecture",
+        "items": [
+            "Castle",
+            "Skyscraper",
+            "Cottage",
+            "Temple",
+            "Bridge",
+            "Pagoda",
+            "Lighthouse",
+            "Pyramid",
+            "Stadium",
+            "Factory",
+            "Cathedral",
+            "Treehouse"
+        ]
+    }
+]
