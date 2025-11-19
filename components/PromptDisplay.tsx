@@ -13,7 +13,7 @@ const PromptDisplay: React.FC<PromptDisplayProps> = ({ value, onChange }) => {
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder="Select subject and style to generate prompt..."
-                className="w-full p-3 text-xs text-gray-600 bg-sky-50 rounded-md border border-sky-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 min-h-[80px] max-h-[120px] resize-none"
+                className="w-full p-3 text-xs text-gray-600 bg-sky-50 rounded-md border border-sky-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 min-h-[80px] max-h-[220px] resize-none"
             />
         </div>
     );

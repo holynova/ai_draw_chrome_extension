@@ -17,7 +17,7 @@ const RandomButton: React.FC<RandomButtonProps> = ({ onRandom, isAnimating }) =>
                 whileTap={{ scale: 0.95 }}
                 className={`
           flex items-center gap-2 px-6 py-2 rounded-full font-bold text-white shadow-lg
-          ${isAnimating ? 'bg-amber-400 cursor-wait' : 'bg-gradient-to-r from-emerald-400 to-sky-400 hover:from-emerald-500 hover:to-sky-500'}
+          ${isAnimating ? 'bg-amber-400' : 'bg-gradient-to-r from-emerald-400 to-sky-400 hover:from-emerald-500 hover:to-sky-500'}
         `}
             >
                 <Dices size={20} />
